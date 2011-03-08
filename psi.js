@@ -10,21 +10,6 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  */
 
-    // whitespace = ' \t\n\r\v\f';
-    // ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    // ascii_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // ascii_letters = ascii_lowercase + ascii_uppercase;
-    // digits = '0123456789';
-    // hexdigits = digits + 'abcdef' + 'ABCDEF';
-    // octdigits = '01234567';
-    // punctuation = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
-    // printable = digits + ascii_letters + punctuation + whitespace
-
-
-/* JavaScript string multiplication
- * http://cixar.com/~kris.kowal/  */
-
-
 py = String.prototype;
 
 /* helper function: multiply strings */
@@ -48,14 +33,76 @@ py.center = function(width, padding) {
 }
 
 py.count = function(sub, start, end) {
+    var str;
     if (start === undefined) {
-        start = 0;
-    }
-    if (end === undefined) {
-        start = -1;
+        str = this;
+    } else if (end === undefined) {
+        str = this.slice(start);
+    } else {
+        str = this.slice(start, end);
     }
 
-    return --this.split(sub).length;
+    return --str.split(sub).length;
+}
+
+py.encode = function() {
+    return;
+}
+
+py.endswith = function(str) {
+    // this will break in ie
+    return this.substr(0 - str.length) === str;
+}
+
+py.expandtabs = function(tabsize) {
+    if (tabsize === undefined) {
+        tabsize = 8;
+    }
+
+    columns = this.split('\t');
+    for (var i = 0; i < columns.length; i++) {
+        columns[i] += ' '.times(Math.abs(tabsize - (columns[i].length % 8)));
+    }
+    return columns.join(' ');
+}
+
+py.find = function(sub, start, end) {
+    var str;
+    if (start === undefined) {
+        str = this;
+    } else if (end === undefined) {
+        str = this.slice(start);
+    } else {
+        str = this.slice(start, end);
+    }
+
+    return str.indexOf(sub);
+}
+
+py.format = function () {
+    return;
+}
+
+py.index(sub, start, end) {
+    var str;
+    if (start === undefined) {
+        str = this;
+    } else if (end === undefined) {
+        str = this.slice(start);
+    } else {
+        str = this.slice(start, end);
+    }
+
+    index = str.indexOf(sub);
+    if (index === -1) throw "ValueError";
+    else return index;
+}
+
+py.isalnum = function() {
+}
+
+py.isdigit = function(str) {
+    return parseInt(str) == str;
 }
 
 py.startswith = function(str) {
@@ -74,10 +121,5 @@ py.upper = function() {
 
 py.isupper = function() {
     return this == this.toUpperCase();
-}
-
-py.endswith = function(str) {
-    // this will break in ie
-    return this.substr(0 - str.length) === str;
 }
 
