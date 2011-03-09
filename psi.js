@@ -83,7 +83,7 @@ py.format = function () {
     return;
 }
 
-py.index(sub, start, end) {
+py.index = function(sub, start, end) {
     var str;
     if (start === undefined) {
         str = this;
@@ -99,10 +99,21 @@ py.index(sub, start, end) {
 }
 
 py.isalnum = function() {
+    return !/[\W^_]/.test(this);
+}
+
+py.isalpha = function() {
+    return !!this && !/[^A-Za-z]/.test(this);
 }
 
 py.isdigit = function(str) {
     return parseInt(str) == str;
+    // About 20-30% slower:
+    // return !!this && !/[^\d]/.test(this);
+}
+
+py.isdigit2 = function(str) {
+    return !!this && !/[^\d]/.test(this);
 }
 
 py.startswith = function(str) {
