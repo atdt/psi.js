@@ -55,8 +55,8 @@ py.endswith = function(str) {
 }
 
 py.expandtabs = function(tabsize) {
-    var i = 0,
-        last = 0,
+    var a = [],
+        tabbed = /[^\t]+/g,
         padded_str = "",
         str = this,
         get_pad_amount = function(length) {
@@ -67,23 +67,11 @@ py.expandtabs = function(tabsize) {
         tabsize = 8;
     }
 
-    for (i = 0; i = str.indexOf('\t', i + 1); i++) {
-    // while ((i = str.indexOf('\t', i + 1)) !== -1) {
-        result = str.substr(last, i - last);
-        console.log("the extracted substring is " + result);
-        last = i + 1;
-        // console.log("expression evaluates to " + (i = str.indexOf('\t', last)));
-        console.log("i = " + i + "; last = " + last);
-
-        // padded_str += ' '.times(get_pad_amount());
+    while  (a = tabbed.exec(str)) {
+         padded_str += a[0] + ' '.times(get_pad_amount(a[0].length));
     }
-    
-    // Python doesn't pad the final element.
-    // for (i = columns.length - 1; i--;) {
-    //     columns[i] += ' '.times(Math.abs(tabsize - (columns[i].length % 8)));
-    // }
 
-    // return columns.join(' ');
+    return padded_str;
 }
 
 py.find = function(sub, start, end) {
