@@ -55,6 +55,7 @@ py.endswith = function(str) {
 }
 
 py.expandtabs = function(tabsize) {
+    // TODO: handle leading and trailing tabs correctly
     var a = [],
         tabbed = /[^\t]+/g,
         padded_str = "",
@@ -111,17 +112,29 @@ py.isalnum = function() {
 }
 
 py.isalpha = function() {
-    return !!this && !/[^A-Za-z]/.test(this);
+    return !!this[0] && !/[^A-Za-z]/.test(this);
 }
 
 py.isdigit = function(str) {
     return parseInt(str) == str;
     // About 20-30% slower:
-    // return !!this && !/[^\d]/.test(this);
+    // return !!this[0] && !/[^\d]/.test(this);
 }
 
 py.isdigit2 = function(str) {
-    return !!this && !/[^\d]/.test(this);
+    return !!this[0] && !/[^\d]/.test(this);
+}
+
+py.islower = function() {
+    return !!this[0] && (this == this.toLowerCase());
+}
+
+py.isspace = function() {
+    return !!this[0] && !/[\S]/.test(this);
+}
+
+py.istitle = function() {
+    return !!this[0] && !/([A-Za-z][A-Z]|[^A-Za-z][a-z])/.test(this);
 }
 
 py.startswith = function(str) {
@@ -142,3 +155,29 @@ py.isupper = function() {
     return this == this.toUpperCase();
 }
 
+py.isupper2 = function() {
+    return /[A-Z]/.test(this) && !/[a-z]/.test(this);
+}
+
+py.join = function(iter) {
+    // only works for arrays
+    return iter.join(this);
+}
+
+py.ljust = function(width, fillchar) {
+    // Why do we need to String(this) in the return statement? O.o 
+    if (fillchar === undefined) {
+        fillchar = ' ';
+    }
+
+    var pad_width = width - this.length;
+    return pad_width > 0? fillchar.times(pad_width) + this : String(this);
+}
+
+py.partition = function(sep) {
+    var split = this.split(sep, 1),
+        tmp = split[1] || "";
+    split[1] = sep,
+    split[2] = tmp;
+    return split;
+} 
