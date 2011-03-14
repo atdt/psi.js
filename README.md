@@ -4,7 +4,8 @@
 psi.js extends JavaScript's strings with methods from the 
 [Python Standard Library](http://docs.python.org/dev/library/string.html).
 
-It's about 30% done.
+Currently under development. Most methods are implemented,
+with the notable exception of str.format.
 
 Copyright 2011, Ori Livneh <ori.livneh@gmail.com>  
 Released under the MIT or GPL Version 2 licenses.
