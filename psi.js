@@ -11,22 +11,23 @@
  */
 
 function PythonicString(str) {
-    // self-evoking constructor 
+    var that = this;
+
+    // Self-evoking constructor 
     if (!(this instanceof PythonicString)) {
         return new PythonicString(str);
+    }
+
+    // Helper functions -- we should wrap this
+    // somehow so that they're private.
+    this.times = function(s, num) {
+        return Array(num + 1).join(s);
     }
 
     this.s = str;
 }
 
 PythonicString.prototype = {
-
-    /* helper function: multiply strings */
-    times: function(num) {
-        return Array(num + 1).join(this.s);
-    },
-
-    /* python */
     capitalize: function() {
         return this.s.substr(0, 1).toUpperCase() + this.s.substr(1).toLowerCase();
     },
@@ -179,16 +180,76 @@ PythonicString.prototype = {
         }
 
         var pad_width = width - this.s.length;
-        return pad_width > 0? fillchar.times(pad_width) + this.s: this.s.toString();
+        return pad_width > 0? this.times(fillchar, pad_width) + this.s: this.s.toString();
     },
 
     partition: function(sep) {
         var i = this.s.indexOf(sep);
-        if (i === -1) {
+        if (!i) {
             return [ this.s, '', ''];
         } else {
             return [ this.s.substr(0, i), sep, this.s.substr(i + 1) ];
         }
-    }
+    },
+
+    replace: function(old_sub, new_sub, count) {
+        // todo
+        if (count === undefined) {
+            // ...
+            return;
+        }
+    },
+
+    rfind: function(sub, start, end) {
+        var str;
+        if (start === undefined) {
+            str = this.s;
+        } else if (end === undefined) {
+            str = this.s.slice(start);
+        } else {
+            str = this.s.slice(start, end);
+        }
+
+        return str.lastIndexOf(sub);
+    },
+
+    rindex: function(sub, start, end) {
+        var str;
+        if (start === undefined) {
+            str = this.s;
+        } else if (end === undefined) {
+            str = this.s.slice(start);
+        } else {
+            str = this.s.slice(start, end);
+        }
+
+        index = str.lastIndexOf(sub);
+        if (index === -1) throw "ValueError";
+        else return index;
+    },
+
+    rjust: function(width, fillchar) {
+        if (fillchar === undefined) {
+            fillchar = ' ';
+        }
+
+        var pad_width = width - this.s.length;
+        return pad_width > 0? this.s : this.s.toString() + this.times(fillchar, pad_width);
+    },
+
+    rpartition: function(sep) {
+        var i = this.s.lastIndexOf(sep);
+        if (!i) {
+            return [ this.s, '', ''];
+        } else {
+            return [ this.s.substr(0, i), sep, this.s.substr(i + 1) ];
+        }
+    },
+
+    zfill: function(width) {
+        var pad_width = width - this.s.length;
+        return pad_width > 0? this.s : this.s.toString() + this.times('0', pad_width);
+    },
+
 }
 

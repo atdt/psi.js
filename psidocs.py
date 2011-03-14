@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+
+# This auto-populates psi.js with Python's docstrings
+# for the various functions it implements.
+
 source = open('psi.js', 'r')
 dest = open('psidoc.js', 'w')
 
